@@ -1,0 +1,22 @@
+name: ashwin-util
+on:
+  schedule:
+    - cron: '0 */05 * * *'
+  workflow_dispatch:
+
+jobs:
+  bomt:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Dep
+        run: sudo pip install requests && sudo pip install python-telegram-bot && sudo wget https://raw.githubusercontent.com/akhilnarang/scripts/master/setup/android_build_env.sh && sudo bash android*
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Bot
+        run: sudo -E python3 ashwin.py
+        env:
+          BOT_API: ${{ secrets.BOT_API }}
+          CHAT: ${{ secrets.CHAT }}
